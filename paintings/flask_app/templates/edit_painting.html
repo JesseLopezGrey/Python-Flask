@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT"
+      crossorigin="anonymous"
+    />
+    <title>Painting Exibit</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+      <div class="container">
+        <a class="navbar-brand" href="/paintings">Painting Exibit</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/paintings">DashBoard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/paintings/new">Add an Painting</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/logout">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    {% with messages = get_flashed_messages(with_categories = true) %}
+    <main class="container">
+      <div class="row">
+        <h1>Edit Painting</h1>
+        <div class="col">
+          <form action="/paintings/{{ painting.id }}/update" method="post">
+            <input
+              type="hidden"
+              name="creator_id"
+              value="{{ session.user_id }}"
+            />
+            <input type="hidden" name="id" value="{{ painting.id }}" />
+            <div class="mb-3">
+              <label for="title" class="form-label">Title:</label>
+              <input
+                type="text"
+                name="title"
+                id="title"
+                class="form-control"
+                value="{{ painting.title }}"
+              />
+              {% if messages %} {% for category, message in messages %} {% if
+              category == 'title' %}
+              <span class="form-text text-danger">{{ message }}</span>
+              {% endif %} {% endfor %} {% endif %}
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description:</label>
+              <textarea
+                name="description"
+                id="description"
+                class="form-control"
+              >
+              {{ painting.description }}
+              </textarea>
+              {% if messages %} {% for category, message in messages %} {% if
+              category == 'description' %}
+              <span class="form-text text-danger">{{ message }}</span>
+              {% endif %} {% endfor %} {% endif %}
+            </div>
+            <div class="mb-3">
+              <label for="price" class="form-label">Price:</label>
+              <input
+                type="text"
+                name="price"
+                id="price"
+                class="form-control"
+                value="{{ painting.price }}"
+              />
+              {% if messages %} {% for category, message in messages %} {% if
+              category == 'price' %}
+              <span class="form-text text-danger">{{ message }}</span>
+              {% endif %} {% endfor %} {% endif %}
+            </div>
+            <div class="d-flex justify-content-end">
+              <a
+                style="margin-right: 10px"
+                href="/paintings"
+                class="btn btn-primary"
+                >Go Back</a
+              >
+              <input
+                type="submit"
+                value="UPDATE PAINTING"
+                class="btn btn-success"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+    {% endwith %}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
